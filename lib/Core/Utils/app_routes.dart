@@ -1,13 +1,16 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'dart:developer';
+
 import 'package:go_router/go_router.dart';
-import 'package:task_pad/Features/Note/Views/edit_note_view.dart';
+import 'package:task_pad/Features/Note/Views/add_and_edit_note_view.dart';
+import 'package:task_pad/Features/Note/model/note_model.dart';
+import 'package:task_pad/Features/OnBoarding/Views/onboarding_view.dart';
 import 'package:task_pad/Features/Splash/Views/splash_view.dart';
-import 'package:task_pad/Features/homeTaskPad/Cubits/BottomNavBarCubit/bottom_nav_bar_cubit.dart';
 import 'package:task_pad/Features/homeTaskPad/Views/home_task_pad_view.dart';
 
 class AppRoutes {
   static const homeTaskPadView = '/homeTaskPadView';
   static const editNoteView = '/editNoteView';
+  static const onboarding = '/onboarding';
 
   static final routes = GoRouter(
     routes: [
@@ -16,15 +19,24 @@ class AppRoutes {
         builder: (context, state) => const SplashView(),
       ),
       GoRoute(
-        path: editNoteView,
-        builder: (context, state) => const EditNoteView(),
-      ),
+          path: editNoteView,
+          builder: (context, state) {
+            return AddAndEditNoteView(
+              receivedNote:
+                  state.extra == null ? null : state.extra as NoteModel,
+            );
+          }),
       GoRoute(
-        path: homeTaskPadView,
-        builder: (context, state) => BlocProvider(
-          create: (context) => BottomNavBarCubit(),
-          child: const HomeTaskPadView(),
-        ),
+          path: homeTaskPadView,
+          builder: (context, state) {
+            log(state.extra.toString());
+            return HomeTaskPadView(
+              x: state.extra == null ? null : 1,
+            );
+          }),
+      GoRoute(
+        path: onboarding,
+        builder: (context, state) => const OnboardingView(),
       )
     ],
   );

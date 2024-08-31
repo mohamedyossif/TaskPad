@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:svg_flutter/svg.dart';
+import 'package:task_pad/Core/Localization/classes/Localization_constant.dart';
 import 'package:task_pad/Core/Utils/app_assets.dart';
 import 'package:task_pad/Core/Utils/app_colors.dart';
 import 'package:task_pad/Features/homeTaskPad/Cubits/BottomNavBarCubit/bottom_nav_bar_cubit.dart';
@@ -12,26 +13,27 @@ class CustomBottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      backgroundColor: AppColors.backgroundBottomBar,
+      backgroundColor: AppColors.backgroundBottomBarColor,
       items: [
         bottomNavItems(
             item: BottomNavBarItemModel(
                 image: AppAssets.imagesNote,
-                label: 'Notes',
+                label: transation(context).notes,
                 isActiveColor: currentIndex == 0)),
         bottomNavItems(
           item: BottomNavBarItemModel(
               image: AppAssets.imagesCheckList,
-              label: 'To-Do',
+              label: transation(context).to_do,
               isActiveColor: currentIndex == 1),
         ),
       ],
       currentIndex: currentIndex,
-      unselectedFontSize: 14,
-      selectedFontSize: 14,
-      selectedItemColor: AppColors.greenColor,
+      unselectedFontSize: 12,
+      selectedFontSize: 12,
+      selectedItemColor: AppColors.blueColor,
       onTap: (index) {
-        BlocProvider.of<BottomNavBarCubit>(context).chnageScreen(index: index);
+        BlocProvider.of<BottomNavBarCubit>(context)
+            .chnageScreen(context, index: index);
       },
     );
   }
@@ -41,9 +43,9 @@ class CustomBottomNavBar extends StatelessWidget {
           {required BottomNavBarItemModel item}) =>
       BottomNavigationBarItem(
           icon: SvgPicture.asset(item.image,
-              width: 30,
+              width: 20,
               colorFilter: ColorFilter.mode(
-                item.isActiveColor ? const Color(0xff26CB02) : Colors.white,
+                item.isActiveColor ? AppColors.blueColor : Colors.white,
                 BlendMode.srcIn,
               )),
           label: item.label);
