@@ -12,19 +12,18 @@ import 'package:task_pad/Features/ToDoTasks/Views/to_do_view.dart';
 import 'package:task_pad/Features/homeTaskPad/Views/Widgets/open_bottom_sheet.dart';
 
 class HomeTaskPadView extends StatelessWidget {
-  const HomeTaskPadView({super.key, this.x});
-  final int? x;
+  const HomeTaskPadView({
+    super.key,
+  });
   // screens
   final List screens = const [NotesView(), ToDoView()];
   @override
   Widget build(BuildContext context) {
-    log("dfdffdfdfdfd");
-
     return BlocBuilder<BottomNavBarCubit, int>(builder: (context, state) {
       return SafeArea(
         child: Scaffold(
           // body
-          body: screens[x ?? state],
+          body: screens[state],
           //loacation button
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 const double kPaddingScreen = 12;
@@ -24,4 +25,6 @@ String kFormatDate = 'd MMMM yyyy h:mm a';
 final DateFormat arabicDateFormat = DateFormat(kFormatDate, 'ar');
 
 ///glocal
+// need to perform navigation or other context-based operations from outside the usual widget tree
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();

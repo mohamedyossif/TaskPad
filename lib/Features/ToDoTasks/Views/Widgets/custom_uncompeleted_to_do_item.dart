@@ -1,8 +1,10 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:task_pad/Core/Utils/app_colors.dart';
 import 'package:task_pad/Core/Utils/app_styles.dart';
+import 'package:task_pad/Core/Widgets/custom_snack_bar.dart';
 import 'package:task_pad/Core/helper/work_manager_notification.dart';
 import 'package:task_pad/Features/ToDoTasks/Cubits/ToDoTasksCubit/to_do_task_cubit.dart';
 import 'package:task_pad/Features/ToDoTasks/model/to_do_task_model.dart';
@@ -41,7 +43,13 @@ class CustomUncompeletedToDoItem extends StatelessWidget {
               onTap: () async {
                 // 0 = uncompeleted
                 task.isCompeleted = 1;
-                await cubitTasks.updateToDoTask(toDoTask: task);
+                await cubitTasks
+                    .updateToDoTask(toDoTask: task)
+                    .then((x) => customSnackBar(
+                          context,
+                          nameTask: task.title,
+                          type: AnimatedSnackBarType.success,
+                        ));
               },
               child: const Icon(
                 FontAwesomeIcons.circle,

@@ -11,9 +11,6 @@ import 'package:task_pad/Features/ToDoTasks/Cubits/ToDoTasksCubit/to_do_task_cub
 import 'package:task_pad/Features/homeTaskPad/Cubits/BottomNavBarCubit/bottom_nav_bar_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-///global variable
-// need to perform navigation or other context-based operations from outside the usual widget tree
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Future.wait([
@@ -26,6 +23,7 @@ void main() async {
 class TaskPadApp extends StatefulWidget {
   const TaskPadApp({super.key});
   static void setLocate(BuildContext context, Locale newLocal) {
+    // to search about _TaskPadAppState in widget tree
     _TaskPadAppState? state =
         context.findAncestorStateOfType<_TaskPadAppState>();
     state?.changeLanguage(newLocal);

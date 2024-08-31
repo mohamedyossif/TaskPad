@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:go_router/go_router.dart';
+import 'package:task_pad/Core/Utils/constants.dart';
 import 'package:task_pad/Features/Note/Views/add_and_edit_note_view.dart';
 import 'package:task_pad/Features/Note/model/note_model.dart';
 import 'package:task_pad/Features/OnBoarding/Views/onboarding_view.dart';
@@ -13,6 +14,7 @@ class AppRoutes {
   static const onboarding = '/onboarding';
 
   static final routes = GoRouter(
+    navigatorKey: navigatorKey,
     routes: [
       GoRoute(
         path: '/',
@@ -29,10 +31,7 @@ class AppRoutes {
       GoRoute(
           path: homeTaskPadView,
           builder: (context, state) {
-            log(state.extra.toString());
-            return HomeTaskPadView(
-              x: state.extra == null ? null : 1,
-            );
+            return const HomeTaskPadView();
           }),
       GoRoute(
         path: onboarding,

@@ -31,5 +31,8 @@
     "cancel": "Cancel",
     "delete": "Delete",
     "subtitle_delete": "Are you sure? This action will permanently delete all tasks and cannot be undone."
-
-}
+    ,"task_warnning":"It's time to get started on your task!",
+    "task_success":"Great job! You've successfully completed the task",
+    "task_error":"Time's up! The scheduled time you set has already passed, so no notification will be sent"
+   , "task_error_app":"There is something wrong"
+}   

@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -170,6 +171,9 @@ class _BodyBottomSheetState extends State<BodyBottomSheet> {
       await WorkManagerNotification.registerScheduleTask(notificationModel);
     } else if (date.isAtSameMomentAs(currentDate)) {
       customSnackBar(context, nameTask: task.title);
+    } else {
+      customSnackBar(context,
+          type: AnimatedSnackBarType.error, nameTask: task.title);
     }
   }
 }
