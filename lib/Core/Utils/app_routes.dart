@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:go_router/go_router.dart';
 import 'package:task_pad/Core/Utils/constants.dart';
 import 'package:task_pad/Features/Note/Views/add_and_edit_note_view.dart';

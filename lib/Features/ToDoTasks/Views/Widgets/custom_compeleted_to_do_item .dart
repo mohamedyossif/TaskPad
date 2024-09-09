@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:task_pad/Core/Utils/app_colors.dart';
 import 'package:task_pad/Core/Utils/app_styles.dart';
-import 'package:task_pad/Core/helper/work_manager_notification.dart';
+import 'package:task_pad/Core/helper/local_notification.dart';
 import 'package:task_pad/Features/ToDoTasks/Cubits/ToDoTasksCubit/to_do_task_cubit.dart';
 import 'package:task_pad/Features/ToDoTasks/model/to_do_task_model.dart';
 import 'package:task_pad/Features/homeTaskPad/Views/Widgets/open_bottom_sheet.dart';
@@ -30,7 +30,7 @@ class CustomCompeletedToDoItem extends StatelessWidget {
         direction: DismissDirection.endToStart,
         onDismissed: (direction) async {
           await Future.wait([
-            WorkManagerNotification.cancelNotification(task.id.toString()),
+            LocalNotification.cancelNotification(task.id!),
             cubitTasks.deleteToDoTask(toDoTask: task),
           ]);
         },

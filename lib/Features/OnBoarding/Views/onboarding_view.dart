@@ -1,33 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:introduction_screen/introduction_screen.dart';
-import 'package:task_pad/Core/Localization/classes/Localization_constant.dart';
+import 'package:task_pad/Core/Localization/classes/localization_constant.dart';
 import 'package:task_pad/Core/Utils/app_assets.dart';
 import 'package:task_pad/Core/Utils/app_colors.dart';
 import 'package:task_pad/Core/Utils/app_routes.dart';
 import 'package:task_pad/Core/Utils/app_styles.dart';
 import 'package:task_pad/Core/helper/dataBase/cache_helper.dart';
-import 'package:task_pad/Features/OnBoarding/Views/widgets/customPageView.dart';
-
+import 'package:task_pad/Features/OnBoarding/Views/widgets/custom_page_view.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../../../Core/Widgets/custom_alert_dialog.dart';
 
 class OnboardingView extends StatelessWidget {
   const OnboardingView({super.key});
   void _onIntroEnd(BuildContext context) async {
-    await customAlertDialog(context,
-        title: transation(context).battery_title,
-        subtitle: transation(context).battery_subtitle,
-        button1Name: transation(context).later,
-        button2Name: transation(context).disable,
-        ontap1: () => Navigator.of(context).pop(),
-        ontap2: () {
-          openAppSettings();
-          Navigator.of(context).pop();
-        }).then((x) {
-      CacheHelper.setOnboarding(true).then(
-        (value) => context.pushReplacement(AppRoutes.homeTaskPadView),
-      );
-    });
+    await requestNotificationPermission(context);
+    CacheHelper.setOnboarding(true).then(
+      (value) => context.pushReplacement(AppRoutes.homeTaskPadView),
+    );
   }
 
   @override
@@ -84,5 +74,29 @@ class OnboardingView extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+Future<void> requestNotificationPermission(BuildContext context) async {
+  var status = await Permission.notification.status;
+
+  if (status.isDenied || status.isRestricted) {
+    // Request permission
+    status = await Permission.notification.request();
+  }
+  if (status.isGranted) {
+  } else {
+    if (context.mounted) {
+      await customAlertDialog(context,
+          title: transation(context).notification_alert,
+          subtitle: transation(context).notification_message,
+          button1Name: transation(context).cancel,
+          button2Name: transation(context).notification_button1,
+          ontap2: () async {
+            await openAppSettings();
+            if (context.mounted) Navigator.of(context).pop();
+          },
+          ontap1: () => Navigator.of(context).pop());
+    }
   }
 }

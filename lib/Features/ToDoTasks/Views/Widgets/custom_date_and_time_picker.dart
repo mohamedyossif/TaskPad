@@ -61,7 +61,6 @@ class _CustomDateAndTimeButtonSectionState
             onChanged: (date) {}, onConfirm: (date) {
           cubitTaskDate.dateTimeEntered =
               AppUtils.formatDate(context, dateTime: date);
-
           setState(() {});
         },
             currentTime: dateTime,

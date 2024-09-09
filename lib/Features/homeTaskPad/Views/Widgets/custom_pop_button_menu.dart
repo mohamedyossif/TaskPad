@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:task_pad/Core/Localization/classes/Localization_constant.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:task_pad/Core/Localization/classes/localization_constant.dart';
 import 'package:task_pad/Core/Widgets/custom_alert_dialog.dart';
-import 'package:task_pad/Core/helper/work_manager_notification.dart';
+import 'package:task_pad/Core/Notification/local_notification.dart';
 import 'package:task_pad/Features/Note/Cubits/NotesCubit/notes_cubit.dart';
 import 'package:task_pad/Features/ToDoTasks/Cubits/ToDoTasksCubit/to_do_task_cubit.dart';
 import 'package:task_pad/Features/homeTaskPad/Views/Widgets/language_alert_dialog.dart';
@@ -15,9 +16,11 @@ class CustomPopButtonMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<int>(
-      onSelected: (int result) {
+      onSelected: (int result) async {
         if (result == 1) {
           languageAlertDialog(context);
+        } else if (result == 2) {
+          await openAppSettings();
         } else {
           customAlertDialog(context,
               title: '${transation(context).delete_all} $deleteName',
@@ -35,7 +38,7 @@ class CustomPopButtonMenu extends StatelessWidget {
               // check if no tasks and remove notification
               if (cubitTask.allTasks.isNotEmpty) {
                 cubitTask.deleteAll().then(
-                      (x) => WorkManagerNotification.cancelAllNotification(),
+                      (x) => LocalNotification.cancelAllNotifications(),
                     );
               }
             }
@@ -59,6 +62,19 @@ class CustomPopButtonMenu extends StatelessWidget {
         ),
         PopupMenuItem<int>(
           value: 2,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(
+                Icons.notifications,
+              ),
+              const SizedBox(width: 15),
+              Text(transation(context).notification_alert),
+            ],
+          ),
+        ),
+        PopupMenuItem<int>(
+          value: 3,
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [

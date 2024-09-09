@@ -13,14 +13,25 @@ class SplashView extends StatefulWidget {
   State<SplashView> createState() => _SplashViewState();
 }
 
-class _SplashViewState extends State<SplashView> {
+class _SplashViewState extends State<SplashView>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _fadeAnimation;
+  late Animation<double> _scaleAnimation;
+
   @override
   void initState() {
+    _controller =
+        AnimationController(vsync: this, duration: const Duration(seconds: 1));
+    _fadeAnimation = Tween<double>(begin: 0, end: 2).animate(
+        CurvedAnimation(parent: _controller, curve: Curves.slowMiddle));
+    _scaleAnimation = Tween<double>(begin: 0.5, end: 1.0).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeIn),
+    );
     // schedules the provided callback to be executed after the current frame is rendered.
     // This ensures that the widget tree is fully built and the context is valid for navigation
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      navigatorTo();
-    });
+    _controller.forward().whenComplete(() => navigatorTo());
+
     super.initState();
   }
 
@@ -39,24 +50,30 @@ class _SplashViewState extends State<SplashView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: Sizeconfig.width(context) * 0.4,
-              child: AspectRatio(
-                aspectRatio: 1,
-                child: Image.asset(
-                  AppAssets.imagesLogoApp,
+      body: FadeTransition(
+        opacity: _fadeAnimation,
+        child: ScaleTransition(
+          scale: _scaleAnimation,
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: Sizeconfig.width(context) * 0.4,
+                  child: AspectRatio(
+                    aspectRatio: 1,
+                    child: Image.asset(
+                      AppAssets.imagesLogoApp,
+                    ),
+                  ),
                 ),
-              ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Text('TaskPad', style: AppStyles.textStyleExtraBold35(context)),
+              ],
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            Text('TaskPad', style: AppStyles.textStyleExtraBold35(context)),
-          ],
+          ),
         ),
       ),
     );

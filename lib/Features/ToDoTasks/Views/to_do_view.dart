@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:task_pad/Core/Localization/classes/Localization_constant.dart';
+import 'package:task_pad/Core/Localization/classes/localization_constant.dart';
 import 'package:task_pad/Core/Utils/constants.dart';
 import 'package:task_pad/Core/Widgets/custom_app_bar.dart';
 import 'package:task_pad/Core/Widgets/custom_no_data.dart';

@@ -1,14 +1,11 @@
 import 'dart:async';
-import 'dart:developer';
-
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:go_router/go_router.dart';
 import 'package:task_pad/Core/Utils/app_routes.dart';
 import 'package:task_pad/Core/Utils/constants.dart';
 import 'package:task_pad/Core/Widgets/custom_snack_bar.dart';
-import 'package:task_pad/Features/ToDoTasks/model/notification_model.dart';
+import 'package:task_pad/Features/ToDoTasks/model/to_do_task_model.dart';
 import 'package:task_pad/Features/homeTaskPad/Cubits/BottomNavBarCubit/bottom_nav_bar_cubit.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:flutter_timezone/flutter_timezone.dart';
@@ -18,13 +15,14 @@ class LocalNotification {
   static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
   static _onTap(NotificationResponse response) {
-    log(response.id.toString());
-    if (response.payload != null) {
+    if (response.payload != null && navigatorKey.currentState != null) {
       var context = navigatorKey.currentState!.context;
       // clear screen unitl specific screen
       GoRouter.of(context).replace(AppRoutes.homeTaskPadView);
-      context.read<BottomNavBarCubit>().chnageScreen(context, index: 1);
-      customSnackBar(context, nameTask: response.payload!);
+      if (context.mounted) {
+        context.read<BottomNavBarCubit>().chnageScreen(context, index: 1);
+        customSnackBar(context, nameTask: response.payload!);
+      }
     }
   }
 
@@ -41,50 +39,8 @@ class LocalNotification {
     );
   }
 
-  static Future<void> showDailySchduledNotification(String message) async {
-    NotificationDetails details = const NotificationDetails(
-      android: AndroidNotificationDetails(
-        'daily_channel_id',
-        'Daily Notifications',
-        channelDescription: 'Channel for daily notifications',
-        importance: Importance.max,
-        priority: Priority.high,
-        playSound: true,
-        ticker: 'ticker',
-      ),
-      iOS: DarwinNotificationDetails(
-        presentAlert: true,
-        presentSound: true,
-      ),
-    );
-    tz.initializeTimeZones();
-    tz.setLocalLocation(tz.getLocation('Africa/Cairo'));
-    var currentTime = tz.TZDateTime.now(tz.local);
-    var scheduleTime = tz.TZDateTime(
-      tz.local,
-      currentTime.year,
-      currentTime.month,
-      currentTime.day,
-      9,
-    );
-    //every 24 hour add 1 day
-    if (scheduleTime.isBefore(currentTime)) {
-      scheduleTime = scheduleTime.add(const Duration(hours: 12));
-    }
-    await flutterLocalNotificationsPlugin.zonedSchedule(
-      3,
-      'Daily Schduled Notification',
-      message,
-      scheduleTime,
-      details,
-      payload: 'zonedSchedule',
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
-    );
-  }
-
   static Future<void> scheduleNotification(
-      NotificationModel notification) async {
+      ToDoTaskModel task, DateTime date, String message) async {
     NotificationDetails details = const NotificationDetails(
       android: AndroidNotificationDetails(
         'Channel_idTask',
@@ -105,22 +61,29 @@ class LocalNotification {
     final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
     // tz package is bad to get hour in cairo
     tz.setLocalLocation(tz.getLocation(currentTimeZone));
-
     return await flutterLocalNotificationsPlugin.zonedSchedule(
-        notification.id,
-        notification.title,
-        notification.notificationMessage,
+        task.id!,
+        task.title,
+        message,
         tz.TZDateTime(
           tz.local,
-          notification.year,
-          notification.months,
-          notification.day,
-          notification.hours,
-          notification.minute,
+          date.year,
+          date.month,
+          date.day,
+          date.hour,
+          date.minute,
         ),
         details,
-        payload: notification.title,
+        payload: task.title,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime);
+  }
+
+  static Future<void> cancelAllNotifications() async {
+    return await flutterLocalNotificationsPlugin.cancelAll();
+  }
+
+  static Future<void> cancelNotification(int id) async {
+    return await flutterLocalNotificationsPlugin.cancel(id);
   }
 }

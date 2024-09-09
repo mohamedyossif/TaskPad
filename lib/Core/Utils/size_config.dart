@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 
 class Sizeconfig {
@@ -12,8 +10,6 @@ class Sizeconfig {
     var responsiveFont = factorScalor * fontSize;
     var lowerLimit = responsiveFont * 0.8;
     var upperLimit = responsiveFont * 1.2;
-    print(
-        "resonsive font $responsiveFont  lowerLimit $lowerLimit  upperLimit $upperLimit  final ${responsiveFont.clamp(lowerLimit, upperLimit)}");
     return responsiveFont.clamp(lowerLimit, upperLimit);
   }
 
@@ -23,7 +19,6 @@ class Sizeconfig {
     // var devicalRadio = dispatcher.views.first.devicePixelRatio;
     // double constraints = phyiscsWidth / devicalRadio;
     double constraints = MediaQuery.sizeOf(context).width;
-    log(constraints.toString());
     if (constraints < tablet) {
       return constraints / 430;
     } else if (constraints < desktop) {

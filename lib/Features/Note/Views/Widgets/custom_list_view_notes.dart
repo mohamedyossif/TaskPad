@@ -5,6 +5,7 @@ import 'package:task_pad/Features/Note/model/note_model.dart';
 class CustomListViewNotes extends StatelessWidget {
   const CustomListViewNotes({super.key, required this.notes});
   final List<NoteModel> notes;
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(

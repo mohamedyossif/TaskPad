@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:task_pad/Core/Localization/classes/Localization_constant.dart';
+import 'package:task_pad/Core/Localization/classes/localization_constant.dart';
 import 'package:task_pad/Core/Utils/app_colors.dart';
 import 'package:task_pad/Core/Utils/app_styles.dart';
 import 'package:task_pad/Core/Utils/app_utils.dart';

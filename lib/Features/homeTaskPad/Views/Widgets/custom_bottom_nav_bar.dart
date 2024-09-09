@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:svg_flutter/svg.dart';
-import 'package:task_pad/Core/Localization/classes/Localization_constant.dart';
+import 'package:task_pad/Core/Localization/classes/localization_constant.dart';
 import 'package:task_pad/Core/Utils/app_assets.dart';
 import 'package:task_pad/Core/Utils/app_colors.dart';
 import 'package:task_pad/Features/homeTaskPad/Cubits/BottomNavBarCubit/bottom_nav_bar_cubit.dart';

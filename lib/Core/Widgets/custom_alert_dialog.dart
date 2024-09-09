@@ -1,5 +1,3 @@
-import 'package:android_intent_plus/android_intent.dart';
-import 'package:android_intent_plus/flag.dart';
 import 'package:flutter/material.dart';
 
 Future<void> customAlertDialog(BuildContext context,
@@ -29,11 +27,11 @@ Future<void> customAlertDialog(BuildContext context,
   );
 }
 
-void openAppSettings() async {
-  const intent = AndroidIntent(
-    action: 'android.settings.APPLICATION_DETAILS_SETTINGS',
-    data: 'package:com.example.task_pad',
-    flags: <int>[Flag.FLAG_ACTIVITY_NEW_TASK],
-  );
-  await intent.launch();
-}
+// void openAppSettings() async {
+//   const intent = AndroidIntent(
+//     action: 'android.settings.APPLICATION_DETAILS_SETTINGS',
+//     data: 'package:com.example.task_pad',
+//     flags: <int>[Flag.FLAG_ACTIVITY_NEW_TASK],
+//   );
+//   await intent.launch();
+// }

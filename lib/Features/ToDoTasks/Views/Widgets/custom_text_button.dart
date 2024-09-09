@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:task_pad/Core/Localization/classes/Localization_constant.dart';
+import 'package:task_pad/Core/Localization/classes/localization_constant.dart';
 import 'package:task_pad/Core/Utils/app_colors.dart';
 
 class CustomTextButton extends StatelessWidget {

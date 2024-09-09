@@ -1,15 +1,12 @@
-import 'dart:developer';
-
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:task_pad/Core/Localization/classes/Localization_constant.dart';
+import 'package:task_pad/Core/Localization/classes/localization_constant.dart';
 import 'package:task_pad/Core/Utils/app_utils.dart';
 import 'package:task_pad/Core/Utils/constants.dart';
 import 'package:task_pad/Core/Widgets/custom_snack_bar.dart';
-import 'package:task_pad/Core/helper/work_manager_notification.dart';
-import 'package:task_pad/Features/ToDoTasks/model/notification_model.dart';
+import 'package:task_pad/Core/helper/local_notification.dart';
 import 'package:task_pad/Features/ToDoTasks/Cubits/ToDoTasksCubit/to_do_task_cubit.dart';
 import 'package:task_pad/Features/ToDoTasks/Views/Widgets/add_to_do_task_form.dart';
 import 'package:task_pad/Features/ToDoTasks/Views/Widgets/custom_date_and_time_picker.dart';
@@ -151,24 +148,9 @@ class _BodyBottomSheetState extends State<BodyBottomSheet> {
         dateNow.year, dateNow.month, dateNow.day, dateNow.hour, dateNow.minute);
     //check user put Future date
     if (date.isAfter(currentDate)) {
-      NotificationModel notificationModel = NotificationModel(
-        id: task.id!,
-        title: task.title,
-        notificationMessage: transation(context).message_task,
-        dailyMessage: transation(context).message_daily,
-        year: date.year,
-        months: date.month,
-        day: date.day,
-        hours: date.hour,
-        minute: date.minute,
-      );
-      log(notificationModel.year.toString());
-      log(notificationModel.months.toString());
-      log(notificationModel.day.toString());
-      log(notificationModel.hours.toString());
-      log(notificationModel.minute.toString());
+      String message = transation(context).message_task;
       //set notifcation
-      await WorkManagerNotification.registerScheduleTask(notificationModel);
+      LocalNotification.scheduleNotification(task, date, message);
     } else if (date.isAtSameMomentAs(currentDate)) {
       customSnackBar(context, nameTask: task.title);
     } else {

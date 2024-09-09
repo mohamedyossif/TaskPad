@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:svg_flutter/svg.dart';
-import 'package:task_pad/Core/Localization/classes/Localization_constant.dart';
+import 'package:task_pad/Core/Localization/classes/localization_constant.dart';
 import 'package:task_pad/Core/Utils/app_colors.dart';
 import 'package:task_pad/Core/Utils/app_styles.dart';
 import 'package:task_pad/Core/Utils/size_config.dart';

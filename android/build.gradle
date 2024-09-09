@@ -1,6 +1,6 @@
-buildscript {
+    buildscript {
     // //workManger
-    ext.kotlin_version = '1.9.10'
+    ext.kotlin_version = '1.8.10'
     repositories {
         google()
         mavenCentral()
@@ -9,7 +9,7 @@ buildscript {
          //workManger
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
          //workManger
-        classpath 'com.android.tools.build:gradle:8.1.1'
+        classpath 'com.android.tools.build:gradle:7.4.1'
     }
 }
 allprojects {
