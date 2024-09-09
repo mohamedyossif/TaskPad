@@ -5,15 +5,21 @@ TaskPad is a user-friendly application designed to help users write and edit not
 It also allows users to create daily tasks and set reminders, with timely notifications to remind them to complete tasks. When a task is finished, 
 it can be marked as completed, moving it to the "completed tasks" section.
 
-## Getting Started
+## Key Features:
 
-This project is a starting point for a Flutter application.
+- Easy Note and Task Management: Write and edit notes or tasks with a simple interface.
+- Daily Task Reminders: Set a custom time for notifications to remind you of your tasks.
+- Task Completion: Mark tasks as completed and manage them efficiently.
 
-A few resources to get you started if this is your first Flutter project:
+## For the TaskPad App, I used a variety of tools:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- MVVM Architecture: Ensures a clean and structured codebase.
+- Cubit: For state management.
+- SharedPreferences: To store user preferences locally.
+- Sqflite: For local database management.
+- Repository Pattern: For better data management.
+- Singleton Pattern: To manage a single instance of certain classes.
+- Responsive Design: Works smoothly across different devices.
+- Localization: Supports both Arabic and English languages.
+- Flutter Local Notifications: Provides notifications for task reminders.
+- Clean Code: Ensures the project is well-structured and easy to maintain.
