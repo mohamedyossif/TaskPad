@@ -1,6 +1,9 @@
-# task_pad
+# TaskPad
 
-A new Flutter project.
+
+TaskPad is a user-friendly application designed to help users write and edit notes effortlessly. 
+It also allows users to create daily tasks and set reminders, with timely notifications to remind them to complete tasks. When a task is finished, 
+it can be marked as completed, moving it to the "completed tasks" section.
 
 ## Getting Started
 
